@@ -1,0 +1,70 @@
+body{
+  background: #333;
+}
+
+.container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mid-container{
+  display: flex;
+  gap: 5px;
+}
+
+#tetris {
+  background-color: #444;
+  position: relative;
+  color: #fff;
+}
+
+#info {
+  width: 110px;
+  padding: 20px;
+  background-color: #555;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#next-shape-container {
+  position: relative;
+  background-color: transparent;
+  border: 1px solid white;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  width: 110px;
+  height: 30px;
+  background-color: #333;
+  color: white;
+  border: none;
+}
+#start:hover{
+  width: 110px;
+  height: 30px;
+  background-color: #444;
+  color: white;
+  border: none;
+}
+
+#restart{
+  animation: restartBtnAnimation 1s linear infinite;
+}
+
+@keyframes restartBtnAnimation {
+  from {
+    border: none;
+  }
+
+  to {
+    border: 2px solide orange;
+  }
+}
