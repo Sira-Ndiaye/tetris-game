@@ -2,7 +2,7 @@
 This is a tetris game made with the combo HTML x CSS x JAVASCRIPT
 
 ## Preview
-For a quick glimpse into the game, visit our CodePen preview: Tetris Game Preview
+For a quick glimpse into the game, visit our CodePen preview: [Tetris Game Preview](https://codepen.io/Sira-Ndiaye/pen/zYborWW)
 
 ## Controls:
 Move Left: ← Arrow Key
