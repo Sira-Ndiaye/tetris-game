@@ -159,37 +159,6 @@ class Square extends Shape {
   rotate(){}
 }
 
-class LShape extends Shape {
-  constructor(x, y, index) {
-    let blocks = [];
-    let color = "red";
-    blocks.push(new Block(new Position(x * grid, y * grid), color));
-    blocks.push(new Block(new Position((x - 1) * grid, y * grid), color ));
-    blocks.push(new Block(new Position((x + 1) * grid, y * grid), color));
-    blocks.push(new Block(new Position((x + 1) * grid, (y + 1) * grid), color));
-    super(blocks,false, index);
-    this.position = 0;
-  }
-
-  rotate() {
-    for (const block of this.blocks) {
-      block.undrawBlock();
-    }
-    if (this.position==0) {
-      let block = this.blocks[1];
-      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y -16)
-      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y - 32)
-      this.position=1;
-    }else if(this.position==1){
-      let block = this.blocks[1];
-      this.blocks[2].setPosition(block.getPosition().x + 32, block.getPosition().y)
-      this.blocks[3].setPosition(block.getPosition().x + 32, block.getPosition().y + 16)
-      this.position=0;
-    }
-    this.init()
-  }
-}
-
 class Line extends Shape {
   constructor(x, y, index) {
     let blocks = [];
@@ -207,16 +176,16 @@ class Line extends Shape {
       block.undrawBlock();
     }
     if (this.position==0) {
-      let block = this.blocks[2];
-      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y - 16)
-      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y - 32)
-      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y + 16)
+      let block = this.blocks[1];
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y + (2*grid))
+      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y + (3*grid))
       this.position = 1;
     }else if(this.position==1){
-      let block = this.blocks[2];
-      this.blocks[1].setPosition(block.getPosition().x -16 , block.getPosition().y)
-      this.blocks[0].setPosition(block.getPosition().x - 32, block.getPosition().y)
-      this.blocks[3].setPosition(block.getPosition().x + 16, block.getPosition().y)
+      let block = this.blocks[1];
+      this.blocks[0].setPosition(block.getPosition().x + grid , block.getPosition().y)
+      this.blocks[2].setPosition(block.getPosition().x + (2*grid), block.getPosition().y)
+      this.blocks[3].setPosition(block.getPosition().x + (3*grid), block.getPosition().y)
       this.position = 0;
     }
     this.init()
@@ -227,14 +196,14 @@ class Line extends Shape {
   }
 }
 
-class TShape extends Shape {
+class LShape extends Shape {
   constructor(x, y, index) {
     let blocks = [];
-    let color = "brown";
-    blocks.push(new Block(new Position( x * grid, y * grid ), color));
-    blocks.push(new Block(new Position( (x + 1) * grid, y * grid ), color));
-    blocks.push(new Block(new Position( x * grid, (y - 1) * grid ), color));
-    blocks.push(new Block(new Position( x * grid, (y + 1) * grid ), color));
+    let color = "red";
+    blocks.push(new Block(new Position(x * grid, y * grid), color));
+    blocks.push(new Block(new Position(x * grid, (y + 1) * grid), color ));
+    blocks.push(new Block(new Position((x + 1) * grid, y * grid), color));
+    blocks.push(new Block(new Position((x + 2) * grid, y * grid), color));
     super(blocks,false, index);
     this.position = 0;
   }
@@ -244,29 +213,146 @@ class TShape extends Shape {
       block.undrawBlock();
     }
     if (this.position==0) {
-    let block = this.blocks[1];
-    this.blocks[3].setPosition(block.getPosition().x - 32, block.getPosition().y )
+      let block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y)
+      this.blocks[0].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      block = this.blocks[0];
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y + (2*grid))
       this.position=1;
-    }else if (this.position==1) {
-    let block = this.blocks[0];
-    this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y +16)
-      this.blocks[1].setPosition(block.getPosition().x - 16, block.getPosition().y)
+    }else if(this.position==1){
+      let block = this.blocks[1];
+      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      block = this.blocks[3];
+      this.blocks[2].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      this.blocks[1].setPosition(block.getPosition().x + (2*grid), block.getPosition().y)
+      this.blocks[0].setPosition(block.getPosition().x + (2*grid), block.getPosition().y - grid)
       this.position=2;
-    }
-    else if (this.position==2) {
-      let block = this.blocks[0];
-      this.blocks[3].setPosition(block.getPosition().x + 16, block.getPosition().y)
+    }else if(this.position==2){
+      let block = this.blocks[3];
+      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y - grid)
+      block = this.blocks[3];
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y + (2*grid))
+      this.blocks[0].setPosition(block.getPosition().x + grid, block.getPosition().y + (2*grid))
       this.position=3;
-    }
-    else if (this.position==3) {
-      let block = this.blocks[0];
+    }else if(this.position==3){
+      console.log("here")
+      let block = this.blocks[3];
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y)
+      block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[2].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      this.blocks[3].setPosition(block.getPosition().x + (2*grid), block.getPosition().y)
       this.position=0;
     }
     this.init()
   }
 }
 
-class ZShape extends Shape {
+class JShape extends Shape {
+  constructor(x, y, index) {
+    let blocks = [];
+    let color = "red";
+    blocks.push(new Block(new Position(x * grid, y * grid), color));
+    blocks.push(new Block(new Position((x + 1) * grid, y * grid), color ));
+    blocks.push(new Block(new Position((x + 2) * grid, y * grid), color));
+    blocks.push(new Block(new Position((x + 2) * grid, (y + 1) * grid), color));
+    super(blocks,false, index);
+    this.position = 0;
+  }
+
+  rotate() {
+    for (const block of this.blocks) {
+      block.undrawBlock();
+    }
+    if (this.position==0) {
+      let block = this.blocks[0];
+      this.blocks[0].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y + (2*grid))
+      this.blocks[3].setPosition(block.getPosition().x - grid, block.getPosition().y + (2*grid))
+      this.position=1;
+    }else if(this.position==1){
+      let block = this.blocks[3];
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[1].setPosition(block.getPosition().x + grid, block.getPosition().y + grid)
+      this.blocks[0].setPosition(block.getPosition().x + (2*grid), block.getPosition().y + grid)
+      this.position=2;
+    }else if(this.position==2){
+      let block = this.blocks[3];
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y)
+      block = this.blocks[2];
+      this.blocks[3].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y + (2*grid))
+      this.position=3;
+    }else if(this.position==3){
+      let block = this.blocks[2];
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y)
+      block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      this.blocks[2].setPosition(block.getPosition().x + (2*grid), block.getPosition().y)
+      this.blocks[3].setPosition(block.getPosition().x + (2*grid), block.getPosition().y + grid)
+      this.position=0;
+    }
+    this.init()
+  }
+}
+
+
+class TShape extends Shape {
+  constructor(x, y, index) {
+    let blocks = [];
+    let color = "brown";
+    blocks.push(new Block(new Position( x * grid, y * grid ), color));
+    blocks.push(new Block(new Position( x * grid, (y + 1) * grid ), color));
+    blocks.push(new Block(new Position( (x + 1) * grid, (y + 1) * grid ), color));
+    blocks.push(new Block(new Position( x * grid, (y + 2) * grid ), color));
+    super(blocks,false, index);
+    this.position = 0;
+  }
+
+  rotate() {
+    for (const block of this.blocks) {
+      block.undrawBlock();
+    }
+    if (this.position==0) {
+      let block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x + grid, block.getPosition().y )
+      this.blocks[3].setPosition(block.getPosition().x + (2*grid), block.getPosition().y )
+      this.position=1;
+    }else if (this.position==1) {
+      let block = this.blocks[2];
+      this.blocks[2].setPosition(block.getPosition().x - grid, block.getPosition().y)
+      block = this.blocks[1];
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y + (2*grid))
+      this.position=2;
+    }
+    else if (this.position==2) {
+      let block = this.blocks[3];
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y - grid)
+      this.blocks[0].setPosition(block.getPosition().x - grid, block.getPosition().y)
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y)
+      this.blocks[3].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      this.position=3;
+    }
+    else if (this.position==3) {
+      console.log("here");
+      let block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y)
+      this.blocks[2].setPosition(block.getPosition().x + grid, block.getPosition().y)
+      this.blocks[3].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y - grid)
+      this.position=0;
+    }
+    this.init()
+  }
+}
+
+class SShape extends Shape {
   constructor(x, y, index) {
     let blocks = [];
     let color = "green"
@@ -279,6 +365,24 @@ class ZShape extends Shape {
   }
 
   rotate() {
+    for (const block of this.blocks) {
+      block.undrawBlock();
+    }
+    if (this.position==0) {
+      let block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x + grid, block.getPosition().y )
+      this.blocks[2].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.blocks[3].setPosition(block.getPosition().x - grid, block.getPosition().y + grid)
+      this.position=1;
+    }else if (this.position==1) {
+      let block = this.blocks[0];
+      this.blocks[1].setPosition(block.getPosition().x, block.getPosition().y )
+      this.blocks[2].setPosition(block.getPosition().x + grid, block.getPosition().y + grid)
+      this.blocks[3].setPosition(block.getPosition().x + grid, block.getPosition().y + (2*grid))
+      this.blocks[0].setPosition(block.getPosition().x, block.getPosition().y + grid)
+      this.position=0;
+    }
+    this.init()
   }
 }
 
@@ -412,7 +516,7 @@ class Tetris{
   generateRandomShape() {
     let shape = null;
     this.increaseIndex();
-    switch (this.getRandomRange(0, 4)) {
+    switch (this.getRandomRange(0, 5)) {
       case 0:
         shape = new Line(5,0,this.index);
         break;
@@ -423,9 +527,12 @@ class Tetris{
         shape = new LShape(5,0,this.index);
         break;
       case 3:
-        shape = new ZShape(5,0,this.index);
+        shape = new JShape(5,0,this.index);
         break;
       case 4:
+        shape = new SShape(5,0,this.index);
+        break;
+      case 5:
         shape = new TShape(5,0,this.index);
         break;
     }
